@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Youtube Rewind sprite animation</title>
+    <style>
+    #logo-container.doodle img {
+        background: none;
+        width: 110px;
+        height: 30px;
+    }
+    </style>
+</head>
+
+<body>
+    <span id="logo-container" class="doodle spf-link">
+    <img id="logo" usemap="#doodle" src="https://s.ytimg.com/yts/img/pixel-vfl3z5WfW.gif" style="background-image: url(yoodle_sprite.png); background-size: auto; background-position: 0px 0px;">
+    <map name="doodle">
+      <area shape="rect" coords="0, 0, 70, 30" href="/" alt="YouTube home" title="YouTube home">
+      <area shape="rect" coords="70, 0, 110, 30" href="/user/theyearinreview?feature=inp-yo-rx1" alt="#YouTubeRewind" title="#YouTubeRewind">
+    </map>
+  </span>
+    <script>
+    // shim layer with setTimeout fallback
+    window.requestAnimFrame = (function() {
+        return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            function(callback) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+    })();
+
+
+    // usage:
+    // instead of setInterval(render, 16) ....
+
+    (function animloop() {
+        var fps = 30;
+        setTimeout(function() {
+            requestAnimFrame(animloop);
+            render();
+        }, 1000 / fps);
+    })();
+
+    // place the rAF *before* the render() to assure as close to
+    // 60fps with the setTimeout fallback.
+
+    function render() {
+        var logo = window.document.getElementById('logo');
+        var newValue = parseInt(logo.style.backgroundPositionX) - 110;
+        logo.style.backgroundPositionX = newValue + 'px';
+    }
+    </script>
+</body>
+
+</html>
